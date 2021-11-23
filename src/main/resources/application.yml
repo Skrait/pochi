@@ -4,7 +4,7 @@ spring:
       url: jdbc:mysql://116.62.5.248:3306/pochi?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8
       username: root
       password: yangdeshi
-      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
       initialSize: 5
       minIdle: 5
       maxActive: 20

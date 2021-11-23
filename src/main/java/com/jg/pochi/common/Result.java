@@ -1,6 +1,6 @@
 package com.jg.pochi.common;
 
-import com.jg.pochi.enums.ResultEnum;
+import com.jg.pochi.enums.ResultEnums;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -20,22 +20,22 @@ public class Result<T> implements Serializable {
     private T data;
 
     public Result(){
-        this.code = ResultEnum.SUCCESS.getCode();
-        this.msg = ResultEnum.ERROR.getMsg();
+        this.code = ResultEnums.SUCCESS.getCode();
+        this.msg = ResultEnums.ERROR.getMsg();
     }
 
     public Result(String msg){
-        this.code = ResultEnum.SUCCESS.getCode();
+        this.code = ResultEnums.SUCCESS.getCode();
         this.msg = msg;
     }
 
     public Result(T data){
-        this.code = ResultEnum.SUCCESS.getCode();
-        this.msg = ResultEnum.ERROR.getMsg();
+        this.code = ResultEnums.SUCCESS.getCode();
+        this.msg = ResultEnums.ERROR.getMsg();
     }
 
     public Result(String msg, T data){
-        this.code = ResultEnum.SUCCESS.getCode();
+        this.code = ResultEnums.SUCCESS.getCode();
         this.msg = msg;
         this.data = data;
     }
@@ -45,14 +45,14 @@ public class Result<T> implements Serializable {
         this.msg = msg;
     }
 
-    public Result(ResultEnum resultEnum, String msg) {
-        this.code = resultEnum.getCode();
+    public Result(ResultEnums resultEnums, String msg) {
+        this.code = resultEnums.getCode();
         this.msg = msg;
     }
 
-    public Result(ResultEnum resultEnum) {
-        this.code = resultEnum.getCode();
-        this.msg = resultEnum.getMsg();
+    public Result(ResultEnums resultEnums) {
+        this.code = resultEnums.getCode();
+        this.msg = resultEnums.getMsg();
     }
 
     public Result(Integer code, String msg, T data) {

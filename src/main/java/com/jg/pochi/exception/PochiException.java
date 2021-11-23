@@ -1,6 +1,6 @@
 package com.jg.pochi.exception;
 
-import com.jg.pochi.enums.ResultEnum;
+import com.jg.pochi.enums.ResultEnums;
 
 /**
  * 自定义异常
@@ -11,16 +11,16 @@ public class PochiException extends RuntimeException{
     //相比entends Exception，RuntimeException就不用在每个方法加try-catch手动去抛了。
     private static final long serialVersionUID = 2450214686001409867L;
 
-    private Integer errorCode = ResultEnum.ERROR.getCode();
+    private Integer errorCode = ResultEnums.ERROR.getCode();
 
-    public PochiException(ResultEnum resultEnum) {
-        super(resultEnum.getMsg());
-        this.errorCode = resultEnum.getCode();
+    public PochiException(ResultEnums resultEnums) {
+        super(resultEnums.getMsg());
+        this.errorCode = resultEnums.getCode();
     }
 
-    public PochiException(ResultEnum resultEnum, Throwable throwable) {
-        super(resultEnum.getMsg(), throwable);
-        this.errorCode = resultEnum.getCode();
+    public PochiException(ResultEnums resultEnums, Throwable throwable) {
+        super(resultEnums.getMsg(), throwable);
+        this.errorCode = resultEnums.getCode();
     }
 
     public PochiException(Integer errorCode, String msg) {
