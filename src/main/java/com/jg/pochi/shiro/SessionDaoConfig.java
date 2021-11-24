@@ -2,6 +2,7 @@ package com.jg.pochi.shiro;
 
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.SimpleSession;
+import org.apache.shiro.session.mgt.ValidatingSession;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -32,11 +33,13 @@ public class SessionDaoConfig extends EnterpriseCacheSessionDAO {
 
     @Override
     protected Session doReadSession(Serializable sessionId) {
-        return super.doReadSession(sessionId);
+        //从redis中读取sessionId(即通过BoundValueOperations从Redis中获取缓存值)
+        return redisTemplate.boundValueOps(sessionId).get();
     }
 
     @Override
     protected void doUpdate(Session session) {
+        if (session instanceof ValidatingSession)
         super.doUpdate(session);
     }
 
