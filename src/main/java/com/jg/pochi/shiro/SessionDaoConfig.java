@@ -1,7 +1,6 @@
 package com.jg.pochi.shiro;
 
 import org.apache.shiro.session.Session;
-import org.apache.shiro.session.mgt.SimpleSession;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,10 +23,8 @@ public class SessionDaoConfig extends EnterpriseCacheSessionDAO {
     @Override
     protected Serializable doCreate(Session session) {
         // 获取SessionId
-        Serializable SessionId = this.generateSessionId(session);
-        SimpleSession simpleSession = (SimpleSession) session;
-        simpleSession.setId(SessionId);
-        return simpleSession;
+        Serializable serializable = this.generateSessionId(session);
+        return super.doCreate(session);
     }
 
     @Override
