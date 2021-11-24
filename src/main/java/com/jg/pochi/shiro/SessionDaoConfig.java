@@ -19,6 +19,7 @@ import java.io.Serializable;
 @Component
 public class SessionDaoConfig extends EnterpriseCacheSessionDAO {
 
+    //注入RedisTemplate用来操作Redis缓存,如添加、删除String的缓存
     @Resource
     private RedisTemplate<Serializable, Session> redisTemplate;
 
@@ -39,13 +40,27 @@ public class SessionDaoConfig extends EnterpriseCacheSessionDAO {
 
     @Override
     protected void doUpdate(Session session) {
-        if (session instanceof ValidatingSession)
-        super.doUpdate(session);
+        /**
+         * ValidatingSession是确定session是否有效和验证自身是否有效
+         * 验证通常是确定上次访问或修改的时间,并确定该时间是否长于允许持续时间
+         */
+        if (session instanceof ValidatingSession){
+            ValidatingSession validatingSession = (ValidatingSession) session;
+            if(validatingSession.isValid()){
+                redisTemplate.boundValueOps(session.getId()).set(session);
+            }else {
+                //校验失败,说明未登录或者登录失效,则删除
+                redisTemplate.delete(session.getId());
+            }
+        }else {
+            //到这里一般来讲就是SimpleSession类型了,我们一样存进Redis缓存
+            redisTemplate.boundValueOps(session.getId()).set(session);
+        }
     }
 
     @Override
     protected void doDelete(Session session) {
-        super.doDelete(session);
+        redisTemplate.delete(session.getId());
     }
 }
 
