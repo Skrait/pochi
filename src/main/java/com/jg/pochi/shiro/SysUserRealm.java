@@ -1,6 +1,7 @@
 package com.jg.pochi.shiro;
 
 import com.jg.pochi.enums.ResultEnums;
+import com.jg.pochi.enums.StateEnums;
 import com.jg.pochi.exception.PochiException;
 import com.jg.pochi.pojo.SysUser;
 import com.jg.pochi.service.SysUserService;
@@ -44,6 +45,13 @@ public class SysUserRealm extends AuthorizingRealm {
         SysUser sysUser = sysUserService.getByUsername(username);
         if (sysUser == null){
             throw new PochiException(ResultEnums.PARAMS_ERROR);
+        }
+        if (StateEnums.NOT_ENABLE.getCode().equals(sysUser.getStatus())){
+            //未启用用户
+            throw new PochiException(ResultEnums.LOGIN_PARAM_ERROR);
+        }
+        if (StateEnums.DELETED.getCode().equals(sysUser.getStatus())){
+            //已删除用户
         }
         return new SimpleAuthenticationInfo(sysUser,sysUser.getUsername(),this.getName());
     }

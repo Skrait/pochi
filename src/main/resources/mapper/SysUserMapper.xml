@@ -18,4 +18,16 @@
         <result column="deleted" property="deleted"/>
     </resultMap>
 
+    <update id="updateLoginTime">
+        update sys_user set
+        login_time = now()
+        where username = ${username}
+    </update>
+
+    <select id="getUserByname" resultMap="BaseResultMap">
+        select sys_user
+        id, username, openid, password, email, nick_name, header, note, create_time, update_time, login_time, status, deleted
+        from sys_user
+        where username = #{username}
+    </select>
 </mapper>
