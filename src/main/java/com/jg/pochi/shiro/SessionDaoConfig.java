@@ -1,8 +1,9 @@
 package com.jg.pochi.shiro;
 
 import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.SimpleSession;
+import org.apache.shiro.session.mgt.ValidatingSession;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -22,24 +23,39 @@ public class SessionDaoConfig extends EnterpriseCacheSessionDAO {
 
     @Override
     protected Serializable doCreate(Session session) {
-        // 获取SessionId
-        Serializable serializable = this.generateSessionId(session);
-        return super.doCreate(session);
+        // 获取sessionid
+        Serializable sessionId = this.generateSessionId(session);
+        // session要和sessionid绑定
+        SimpleSession simpleSession = (SimpleSession) session;
+        simpleSession.setId(sessionId);
+        return sessionId;
     }
 
     @Override
     protected Session doReadSession(Serializable sessionId) {
-        return super.doReadSession(sessionId);
+        // 从redis中读取sessionId
+        return redisTemplate.boundValueOps(sessionId).get();
     }
 
     @Override
     protected void doUpdate(Session session) {
-        super.doUpdate(session);
+        if (session instanceof ValidatingSession) {
+            ValidatingSession validatingSession = (ValidatingSession) session;
+            if (validatingSession.isValid()) {
+                redisTemplate.boundValueOps(session.getId()).set(session);
+            } else {
+                // 校验失败，说明未登录或者登录失效
+                redisTemplate.delete(session.getId());
+            }
+        } else {
+            redisTemplate.boundValueOps(session.getId()).set(session);
+        }
     }
 
     @Override
     protected void doDelete(Session session) {
-        super.doDelete(session);
+        redisTemplate.delete(session.getId());
     }
+
 }
 
