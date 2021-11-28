@@ -56,6 +56,5 @@ public class SessionDaoConfig extends EnterpriseCacheSessionDAO {
     protected void doDelete(Session session) {
         redisTemplate.delete(session.getId());
     }
-
 }
 

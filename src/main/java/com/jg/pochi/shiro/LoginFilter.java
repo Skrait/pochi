@@ -30,6 +30,6 @@ public class LoginFilter extends UserFilter {
         response.setContentType("application/json; charset=utf-8");
         //直接写会未登录的JSON报文,从枚举常量中取出来
         response.getWriter().write(JSON.toJSONString(new Result<>(ResultEnums.NO_LOGIN)));
-        super.redirectToLogin(request, response);
+        //super.redirectToLogin(request, response);
     }
 }
