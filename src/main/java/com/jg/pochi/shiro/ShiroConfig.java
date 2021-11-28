@@ -48,6 +48,7 @@ public class ShiroConfig {
         shiroFilters.put("authc", new LoginFilter());
         // 配置需要认证或者需要放行的路径，注意，这里必须是LinkedHashMap
         Map<String, String> filterMap = new LinkedHashMap<>();
+        filterMap.put("/sysUser/login","anon");
         filterMap.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
         return shiroFilterFactoryBean;

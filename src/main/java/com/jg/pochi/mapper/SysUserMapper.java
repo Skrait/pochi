@@ -4,6 +4,7 @@ package com.jg.pochi.mapper;/**
  */
 
 import com.jg.pochi.pojo.SysUser;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,12 +15,12 @@ import org.springframework.stereotype.Component;
 public interface SysUserMapper {
 
     //更新指定用户名的登陆时间为当前时间
-    void updateLoginTime(String username);
+    void updateLoginTime(@Param("username") String username);
 
     /**
      * 根据用户名查询用户
      * @param username
      * @return
      */
-    SysUser getByUsername(String username);
+    SysUser getByUsername(@Param("username") String username);
 }

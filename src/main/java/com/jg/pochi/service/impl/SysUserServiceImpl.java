@@ -6,6 +6,8 @@ import com.jg.pochi.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * Author Peekaboo
  * Date 2021/11/25 10:29
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysUserServiceImpl implements SysUserService {
 
-    @Autowired
+    @Resource
     private SysUserMapper sysUserMapper;
 
     @Override
