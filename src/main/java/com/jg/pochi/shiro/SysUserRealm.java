@@ -41,7 +41,6 @@ public class SysUserRealm extends AuthorizingRealm {
 
     /**
      * 认证
-     *
      * @param token
      * @return
      * @throws AuthenticationException

@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class SysUser implements Serializable {
 
     /**
-     * id 这里不用数据库自增,用雪花算法
+     * id
      */
     private Long id;
 
@@ -73,9 +73,8 @@ public class SysUser implements Serializable {
     private Integer status;
 
     /**
-     * 是否逻辑删除，1是0否
+     * 是否删除，1是0否
      */
     private Integer deleted;
 
 }
-

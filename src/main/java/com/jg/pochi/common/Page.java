@@ -1,5 +1,7 @@
 package com.jg.pochi.common;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.Map;
  * Author Peekaboo
  * @Date 2021/11/19 17:36
  */
+@Data
 public class Page<T> implements Serializable {
 
     //当前页数

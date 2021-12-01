@@ -18,12 +18,7 @@
         <result column="deleted" property="deleted"/>
     </resultMap>
 
-    <update id="updateLoginTime">
-        update sys_user
-        set login_time = NOW()
-        where username = #{username}
-    </update>
-
+    <!--查询用户-->
     <select id="getByUsername" resultMap="BaseResultMap">
         select id,
                username,
@@ -38,4 +33,106 @@
         from sys_user
         where username = #{username}
     </select>
+
+    <!--添加用户-->
+    <insert id="save">
+        insert into sys_user(id, username, openid, password,
+                             email, nick_name, header, note, create_time,
+                             update_time, login_time, status, deleted)
+        VALUES(
+               #{id}, #{username}, #{openID}, #{password},
+               #{email}, #{nickName}, #{header}, #{note}
+              )
+
+    </insert>
+
+    <!--修改用户-->
+    <update id="update">
+        UPDATE sys_user
+        SET openid = #{openId},
+            email = #{eamil},
+            nick_name = #{nickName},
+            header = #{header},
+            note = #{note}
+        WHERE id = #{id}
+    </update>
+
+<!--    逻辑删除用户-->
+    <update id="delete">
+        update sys_user
+        set deleted = 1
+        where id = #{}
+    </update>
+
+    <!--更新登陆时间-->
+    <update id="updateLoginTime">
+        update sys_user
+        set login_time = NOW()
+        where username = #{username}
+    </update>
+
+    <update id="updateStatus">
+        update sys_user
+        set status = #{status}
+        where id = #{id}
+    </update>
+
+    <!--根据id查询用户信息,尽可能不用select*即使要查所有-->
+    <select id="getById" resultMap="BaseResultMap">
+        select id,
+               username,
+               openid,
+               password,
+               email,
+               nick_name,
+               header,
+               note,
+               create_time,
+               update_time,
+               login_time,
+               status
+        from sys_user
+        where id = #{id}
+    </select>
+
+    <select id="getByPage" resultMap="BaseResultMap">
+        select
+            id,
+            username,
+            nick_name,
+            header,
+            note,
+            create_time,
+            login_time,
+            status
+        from sys_user
+        where deleted = 0
+        <if test="params.username != null and param.username!=''">
+            and username = #{param.username}
+        </if>
+        <if test="params.nickName != null and param.nickName!=''">
+            and nick_name like concat('%',#{params.nickName),'%')
+        </if>
+        <if test="params.status != null and param.status!=''">
+            and status = #{status}
+        </if>
+        limit #{index}, #{pageSize)
+    </select>
+
+    <select id="countByPage" resultType="java.lang.Integer">
+        select
+        count(*)
+        from sys_user
+        where deleted = 0
+        <if test="params.username != null and param.username!=''">
+            and username = #{param.username}
+        </if>
+        <if test="params.nickName != null and param.nickName!=''">
+            and nick_name like concat('%',#{params.nickName),'%')
+        </if>
+        <if test="params.status != null and param.status!=''">
+            and status = #{status}
+        </if>
+    </select>
+
 </mapper>
