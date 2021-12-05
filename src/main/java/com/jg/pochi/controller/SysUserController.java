@@ -97,8 +97,8 @@ public class SysUserController {
      * @param page
      * @return
      */
-    @RequestMapping(value = "/getByPage",method = RequestMethod.POST)
-    public Result<Page<SysUser>> getByPage(@RequestBody Page<SysUser> page){
+    @RequestMapping(value = "/getByPage", method = RequestMethod.POST)
+    public Result<Page<SysUser>> getByPage(@RequestBody Page<SysUser> page) {
         page = sysUserService.getByPage(page);
         return new Result<>(page);
     }
@@ -110,6 +110,7 @@ public class SysUserController {
      */
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     public Result<SysUser> get(@PathVariable Long id) {
+        System.out.println(id);
         SysUser sysUser = sysUserService.get(id);
         return new Result<>(sysUser);
     }

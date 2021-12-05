@@ -18,6 +18,13 @@
         <result column="deleted" property="deleted"/>
     </resultMap>
 
+    <!--更新登陆时间-->
+    <update id="updateLoginTime">
+        update sys_user
+        set login_time = NOW()
+        where username = #{username}
+    </update>
+
     <!--查询用户-->
     <select id="getByUsername" resultMap="BaseResultMap">
         select id,
@@ -37,13 +44,10 @@
     <!--添加用户-->
     <insert id="save">
         insert into sys_user(id, username, openid, password,
-                             email, nick_name, header, note, create_time,
-                             update_time, login_time, status, deleted)
-        VALUES(
-               #{id}, #{username}, #{openID}, #{password},
-               #{email}, #{nickName}, #{header}, #{note}
-              )
-
+                             email, nick_name,
+                             header, note)
+        values (#{id}, #{username}, #{openId}, #{password},
+                #{email}, #{nickName}, #{header}, #{note})
     </insert>
 
     <!--修改用户-->
@@ -61,15 +65,10 @@
     <update id="delete">
         update sys_user
         set deleted = 1
-        where id = #{}
+        where id = #{id}
     </update>
 
-    <!--更新登陆时间-->
-    <update id="updateLoginTime">
-        update sys_user
-        set login_time = NOW()
-        where username = #{username}
-    </update>
+
 
     <update id="updateStatus">
         update sys_user
@@ -107,16 +106,16 @@
             status
         from sys_user
         where deleted = 0
-        <if test="params.username != null and param.username!=''">
-            and username = #{param.username}
+        <if test="params.username != null and params.username!=''">
+            and username = #{params.username}
         </if>
-        <if test="params.nickName != null and param.nickName!=''">
-            and nick_name like concat('%',#{params.nickName),'%')
+        <if test="params.nickName != null and params.nickName!=''">
+            and nick_name like concat('%',#{params.nickName},'%')
         </if>
-        <if test="params.status != null and param.status!=''">
-            and status = #{status}
+        <if test="params.status != null and params.status!=''">
+            and status = #{params.status}
         </if>
-        limit #{index}, #{pageSize)
+        limit #{index}, #{pageSize}
     </select>
 
     <select id="countByPage" resultType="java.lang.Integer">
@@ -124,14 +123,14 @@
         count(*)
         from sys_user
         where deleted = 0
-        <if test="params.username != null and param.username!=''">
-            and username = #{param.username}
+        <if test="params.username != null and params.username!=''">
+            and username = #{params.username}
         </if>
-        <if test="params.nickName != null and param.nickName!=''">
-            and nick_name like concat('%',#{params.nickName),'%')
+        <if test="params.nickName != null and params.nickName!=''">
+            and nick_name like concat('%',#{params.nickName},'%')
         </if>
-        <if test="params.status != null and param.status!=''">
-            and status = #{status}
+        <if test="params.status != null and params.status!=''">
+            and status = #{params.status}
         </if>
     </select>
 

@@ -49,7 +49,7 @@ public interface SysUserMapper {
      * 更新状态值
      * @param id
      */
-    void updateStatus(Long id);
+    void updateStatus(SysUser sysUser);
 
     /**
      * 根据ID查询

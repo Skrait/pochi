@@ -1,4 +1,8 @@
 spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
   datasource:
     druid:
       url: jdbc:mysql://116.62.5.248:3306/pochi?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8

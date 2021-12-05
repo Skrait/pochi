@@ -58,7 +58,7 @@ public class SysUserServiceImpl implements SysUserService {
         //先查再改
         SysUser sysUser =  sysUserMapper.getById(id);
         sysUser.setStatus(StateEnums.ENABLED.getCode());
-        sysUserMapper.updateStatus(id);
+        sysUserMapper.updateStatus(sysUser);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class SysUserServiceImpl implements SysUserService {
         //先查再改
         SysUser sysUser =  sysUserMapper.getById(id);
         sysUser.setStatus(StateEnums.NOT_ENABLE.getCode());
-        sysUserMapper.updateStatus(id);
+        sysUserMapper.updateStatus(sysUser);
     }
 
     @Override
@@ -87,7 +87,6 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public SysUser get(Long id) {
-        sysUserMapper.getById(id);
-        return null;
+        return sysUserMapper.getById(id);
     }
 }
