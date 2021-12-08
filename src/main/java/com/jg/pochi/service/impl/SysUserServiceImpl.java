@@ -6,6 +6,7 @@ import com.jg.pochi.mapper.SysUserMapper;
 import com.jg.pochi.pojo.SysUser;
 import com.jg.pochi.service.SysUserService;
 import com.jg.pochi.utils.IdWorker;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import java.util.List;
  * Author Peekaboo
  * Date 2021/11/25 10:29
  */
+@Slf4j
 @Service
 public class SysUserServiceImpl implements SysUserService {
 
@@ -81,7 +83,7 @@ public class SysUserServiceImpl implements SysUserService {
         List<SysUser> userList = sysUserMapper.getByPage(page);
         Integer totalCount = sysUserMapper.countByPage(page);//获得总条数
         page.setList(userList);//获得分页数据
-        page.setTotalCount(totalCount);//根据总条数获得总页数
+        page.setTotalCount(totalCount);//在设置总条数时，计算并设置总页数
         return page;
     }
 

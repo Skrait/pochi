@@ -54,7 +54,7 @@
     <update id="update">
         UPDATE sys_user
         SET openid = #{openId},
-            email = #{eamil},
+            email = #{email},
             nick_name = #{nickName},
             header = #{header},
             note = #{note}
@@ -68,8 +68,7 @@
         where id = #{id}
     </update>
 
-
-
+    <!--更新状态-->
     <update id="updateStatus">
         update sys_user
         set status = #{status}
@@ -95,15 +94,16 @@
     </select>
 
     <select id="getByPage" resultMap="BaseResultMap">
-        select
-            id,
-            username,
-            nick_name,
-            header,
-            note,
-            create_time,
-            login_time,
-            status
+        select id,
+        username,
+        nick_name,
+        header,
+        email,
+        note,
+        create_time,
+        username,
+        login_time,
+        status
         from sys_user
         where deleted = 0
         <if test="params.username != null and params.username!=''">
@@ -112,7 +112,7 @@
         <if test="params.nickName != null and params.nickName!=''">
             and nick_name like concat('%',#{params.nickName},'%')
         </if>
-        <if test="params.status != null and params.status!=''">
+        <if test="params.status != null">
             and status = #{params.status}
         </if>
         limit #{index}, #{pageSize}

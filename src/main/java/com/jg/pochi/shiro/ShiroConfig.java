@@ -17,6 +17,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import javax.annotation.Resource;
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;

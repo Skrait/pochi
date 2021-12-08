@@ -50,8 +50,15 @@ public class Page<T> implements Serializable {
         return (pageNumber - 1) * pageSize;
     }
 
+    public void setPageNumber(Integer pageNumber) {
+        this.pageNumber = pageNumber;
+        if (this.pageNumber == null || this.pageNumber < 1) {
+            this.pageNumber = 1;
+        }
+    }
+
     /**
-     * 在设置总条数时，计算总页数
+     * 在设置总条数时，计算并设置总页数
      */
     public void setTotalCount(Integer totalCount){
         this.totalCount = totalCount;

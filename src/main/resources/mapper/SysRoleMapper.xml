@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jg.pochi.mapper.SysRoleMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jg.pochi.pojo.SysRole">
+        <id column="role_id" property="roleId"/>
+        <result column="role_name" property="roleName"/>
+        <result column="role_sort" property="roleSort"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="delete" property="delete"/>
+    </resultMap>
+
+<!--    保存角色-->
+    <insert id="save">
+        insert into sys_role(role_name, role_sort, create_by,  update_by) VALUES
+        (
+         #{roleName},
+         #{roleSort},
+         #{createBy},
+         #{updateBy}
+        )
+    </insert>
+
+<!-- 更新角色-->
+    <update id="update">
+        update sys_role
+        set role_name = #{roleName},
+            role_sort = #{roleSort},
+            update_by = #{updateBy}
+        where role_id = #{roleId}
+    </update>
+
+<!--    删除角色(逻辑)-->
+    <update id="delete">
+        update sys_role
+        set deleted = 1
+        where role_id = #{roleId}
+    </update>
+
+<!--    根据角色id查询角色信息-->
+    <select id="get" resultMap="BaseResultMap">
+        select role_id,
+               role_name,
+               role_sort,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from sys_role
+        where role_id = #{roleId}
+    </select>
+
+
+    <!--    分页查询-->
+    <select id="getByPage" resultMap="BaseResultMap">
+        select role_id,
+               role_name,
+               role_sort,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from sys_role
+        where deleted = 0
+        <if test="params.roleName ! = null and param.roleName != ''">
+            and role_name = #{params.roleName}
+        </if>
+        order by role_sort
+        limit #{pageNumber},#{pageSize}
+    </select>
+
+<!--    查询总条数-->
+    <select id="countByPage" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM
+        sys_role
+        WHERE deleted = 0
+        <if test="params.roleName ! = null and param.roleName != ''">
+            AND role_name = #{params.roleName}
+        </if>
+    </select>
+
+
+</mapper>

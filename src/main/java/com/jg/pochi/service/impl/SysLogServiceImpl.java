@@ -7,6 +7,8 @@ import com.jg.pochi.utils.IdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * Author Peekaboo
  *
@@ -15,10 +17,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysLogServiceImpl implements SysLogService {
 
-    @Autowired
+    @Resource
     private SysLogMapper sysLogMapper;
 
-    @Autowired
+    @Resource
     private IdWorker idWorker;
 
     @Override
