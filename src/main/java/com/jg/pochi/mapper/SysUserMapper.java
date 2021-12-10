@@ -5,6 +5,7 @@ package com.jg.pochi.mapper;/**
 
 import com.jg.pochi.common.Page;
 import com.jg.pochi.pojo.SysUser;
+import com.jg.pochi.pojo.vo.SysUserVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +32,7 @@ public interface SysUserMapper {
      * 添加用户
      * @param sysUser
      */
-    void save(SysUser sysUser);
+    void save(SysUserVo sysUser);
 
     /**
      * 修改用户

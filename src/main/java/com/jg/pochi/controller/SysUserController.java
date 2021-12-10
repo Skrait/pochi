@@ -4,6 +4,7 @@ import com.jg.pochi.common.Page;
 import com.jg.pochi.common.Result;
 import com.jg.pochi.enums.ResultEnums;
 import com.jg.pochi.pojo.SysUser;
+import com.jg.pochi.pojo.vo.SysUserVo;
 import com.jg.pochi.pojo.vo.TokenVo;
 import com.jg.pochi.service.SysUserService;
 import com.jg.pochi.shiro.SysUserRealm;
@@ -33,7 +34,7 @@ public class SysUserController {
     private SysUserService sysUserService;
 
     @PostMapping("/save")
-    public Result<?> save(@RequestBody SysUser sysUser){
+    public Result<?> save(@RequestBody SysUserVo sysUser){
 
         //save前做好做参数校验,参数校验最好放在Controller里面去,这样可以少抛些异常
         if(StringUtils.isBlank(sysUser.getUsername())){

@@ -2,6 +2,7 @@ package com.jg.pochi.service;
 
 import com.jg.pochi.common.Page;
 import com.jg.pochi.pojo.SysUser;
+import com.jg.pochi.pojo.vo.SysUserVo;
 
 /**
  * Author Peekaboo
@@ -26,7 +27,7 @@ public interface SysUserService {
      * 保存用户
      * @param sysUser
      */
-    void save(SysUser sysUser);
+    void save(SysUserVo sysUser);
 
     /**
      * 修改用户

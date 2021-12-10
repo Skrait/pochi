@@ -56,15 +56,15 @@
 
     <!--    分页查询-->
     <select id="getByPage" resultMap="BaseResultMap">
-        select role_id,
+        SELECT role_id,
                role_name,
                role_sort,
                create_by,
                create_time,
                update_by,
                update_time
-        from sys_role
-        where deleted = 0
+        FROM sys_role
+        WHERE deleted = 0
         <if test="params.roleName ! = null and param.roleName != ''">
             and role_name = #{params.roleName}
         </if>

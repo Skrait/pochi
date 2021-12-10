@@ -4,10 +4,11 @@ import com.jg.pochi.common.Page;
 import com.jg.pochi.enums.StateEnums;
 import com.jg.pochi.mapper.SysUserMapper;
 import com.jg.pochi.pojo.SysUser;
+import com.jg.pochi.pojo.vo.SysUserVo;
 import com.jg.pochi.service.SysUserService;
 import com.jg.pochi.utils.IdWorker;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +39,10 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public void save(SysUser sysUser) {
+    public void save(SysUserVo sysUser) {
+        //拷贝属性
+        SysUser user = new SysUser();
+        BeanUtils.copyProperties(sysUser,user);
         //ID用雪花算法生成
         sysUser.setId(idWorker.nextId());
         sysUserMapper.save(sysUser);
