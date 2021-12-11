@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Author Peekaboo
@@ -69,5 +70,15 @@ public class SysRoleController {
     public Result<Page<SysRole>> getByPage(@RequestBody Page<SysRole> page) {
         page = sysRoleService.getByPage(page);
         return new Result<>(page);
+    }
+
+    /**
+     * 查询所有角色
+     * @return
+     */
+    @RequestMapping(value = "/getAll",method = RequestMethod.GET)
+    public Result<List<SysRole>> getAll(){
+        List<SysRole> list = sysRoleService.getAll();
+        return new Result<>(list);
     }
 }

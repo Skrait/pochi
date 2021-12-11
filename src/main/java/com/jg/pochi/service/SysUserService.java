@@ -33,7 +33,7 @@ public interface SysUserService {
      * 修改用户
      * @param sysUser
      */
-    void update(SysUser sysUser);
+    void update(SysUserVo sysUser);
 
     /**
      * 删除用户
@@ -65,5 +65,5 @@ public interface SysUserService {
      * @param id
      * @return
      */
-    SysUser get(Long id);
+    SysUserVo get(Long id);
 }

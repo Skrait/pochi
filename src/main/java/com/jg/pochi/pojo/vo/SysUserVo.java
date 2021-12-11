@@ -5,6 +5,7 @@ import lombok.Data;
 
 /**
  * 系统用户视图类,VO与前端对应因此不需要实现序列化
+ * 比SysUser多带了角色信息
  * Author Peekaboo
  * Date 2021/12/10 17:19
  */
@@ -49,11 +50,25 @@ public class SysUserVo {
      */
     private String note;
 
-
     /**
      * 账号启用状态，1是0否
      */
     private Integer status;
+
+    /**
+     * 创建时间
+     */
+    private String createTime;
+
+    /**
+     * 修改时间
+     */
+    private String updateTime;
+
+    /**
+     * 最后登录时间
+     */
+    private String loginTime;
 
     /**
      * 角色

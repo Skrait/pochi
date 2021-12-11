@@ -82,6 +82,29 @@
             AND role_name = #{params.roleName}
         </if>
     </select>
+    <select id="getByIds" resultMap="BaseResultMap">
+        SELECT role_id,
+               role_name,
+               role_sort,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        FROM sys_role
+        WHERE role_id in (
+            <foreach collection="list" item="id" separator=",">
+                #{id}
+            </foreach>
+            )
+    </select>
+    <select id="getAll" resultMap="BaseResultMap">
+        SELECT
+            role_id,
+            role_name
+        FROM sys_role
+        WHERE deleted = 0
+        order by role_sort
+    </select>
 
 
 </mapper>

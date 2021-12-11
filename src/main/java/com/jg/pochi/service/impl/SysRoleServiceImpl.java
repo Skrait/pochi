@@ -87,4 +87,13 @@ public class SysRoleServiceImpl implements SysRoleService {
         return page;
 
     }
+
+    /**
+     * 查询所有角色
+     * @return
+     */
+    @Override
+    public List<SysRole> getAll() {
+        return sysRoleMapper.getAll();
+    }
 }

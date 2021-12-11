@@ -58,7 +58,7 @@ public class SysUserController {
      * @return
      */
     @PutMapping("/update")
-    public Result<?> update(@RequestBody SysUser sysUser){
+    public Result<?> update(@RequestBody SysUserVo sysUser){
 
         sysUserService.update(sysUser);
         return new Result<>("修改成功");
@@ -110,9 +110,9 @@ public class SysUserController {
      * @return
      */
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
-    public Result<SysUser> get(@PathVariable Long id) {
+    public Result<SysUserVo> get(@PathVariable Long id) {
         System.out.println(id);
-        SysUser sysUser = sysUserService.get(id);
+        SysUserVo sysUser = sysUserService.get(id);
         return new Result<>(sysUser);
     }
 

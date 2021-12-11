@@ -1,14 +1,13 @@
-package com.jg.pochi.service;/**
- * Author Peekaboo
- * Date 2021/12/7 16:54
- */
+package com.jg.pochi.service;
 
 import com.jg.pochi.common.Page;
 import com.jg.pochi.pojo.SysRole;
 import com.jg.pochi.pojo.vo.SysRoleVo;
 
+import java.util.List;
+
 /**
- * @Auther Song Kang
+ * @Author Song Kang
  * @Date 2021/12/7
  */
 public interface SysRoleService {
@@ -44,4 +43,10 @@ public interface SysRoleService {
      * @return
      */
     Page<SysRole> getByPage(Page<SysRole> page);
+
+    /**
+     * 查询所有角色
+     * @return
+     */
+    List<SysRole> getAll();
 }

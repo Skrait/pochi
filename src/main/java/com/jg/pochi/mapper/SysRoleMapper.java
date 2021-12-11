@@ -54,4 +54,16 @@ public interface SysRoleMapper {
      */
     Integer countByPage(Page<SysRole> page);
 
+    /**
+     * 根据ID集合查询所有角色信息
+     * @param roleIds
+     * @return
+     */
+    List<SysRole> getByIds(List<Long> roleIds);
+
+    /**
+     * 查询所有角色
+     * @return
+     */
+    List<SysRole> getAll();
 }
