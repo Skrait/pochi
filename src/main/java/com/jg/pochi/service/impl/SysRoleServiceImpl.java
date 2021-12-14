@@ -29,7 +29,7 @@ public class SysRoleServiceImpl implements SysRoleService {
         //先从shiro获取登录用户
         SysUser loginUser = ShiroUtils.getLoginUser();
         String username = loginUser.getUsername();
-        sysRole.setCreateTime(username);
+        sysRole.setCreateBy(username);
         sysRole.setUpdateBy(username);
         sysRoleMapper.save(sysRole);
     }

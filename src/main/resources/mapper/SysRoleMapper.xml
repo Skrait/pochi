@@ -14,14 +14,9 @@
     </resultMap>
 
 <!--    保存角色-->
-    <insert id="save">
-        insert into sys_role(role_name, role_sort, create_by,  update_by) VALUES
-        (
-         #{roleName},
-         #{roleSort},
-         #{createBy},
-         #{updateBy}
-        )
+    <insert id="save" useGeneratedKeys="true" keyColumn="role_id" keyProperty="roleId">
+        insert into sys_role(role_name, role_sort, create_by, update_by)
+        VALUES (#{roleName}, #{roleSort}, #{createBy}, #{updateBy})
     </insert>
 
 <!-- 更新角色-->
@@ -103,7 +98,7 @@
             role_name
         FROM sys_role
         WHERE deleted = 0
-        order by role_sort
+        order by role_sort DESC
     </select>
 
 

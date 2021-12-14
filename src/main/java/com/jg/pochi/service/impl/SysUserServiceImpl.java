@@ -143,6 +143,8 @@ public class SysUserServiceImpl implements SysUserService {
             if (!CollectionUtils.isEmpty(roleList)){
                 sysUserVo.setSysRole(roleList.get(0));
             }
+        }else {
+            sysUserVo.setSysRole(new SysRole());
         }
         return sysUserVo;
 

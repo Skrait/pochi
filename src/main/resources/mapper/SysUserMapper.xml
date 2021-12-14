@@ -115,7 +115,9 @@
         <if test="params.status != null">
             and status = #{params.status}
         </if>
+        ORDER BY login_time DESC
         limit #{index}, #{pageSize}
+
     </select>
 
     <select id="countByPage" resultType="java.lang.Integer">
