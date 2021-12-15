@@ -62,7 +62,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      * @return
      */
     @Override
-    public SysRoleVo get(Long id) {
+    public SysRole get(Long id) {
         return sysRoleMapper.get(id);
     }
 

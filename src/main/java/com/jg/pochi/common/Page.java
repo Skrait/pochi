@@ -9,13 +9,13 @@ import java.util.Map;
 
 /**
  * 分页类
- * Author Peekaboo
+ * @Author Peekaboo
  * @Date 2021/11/19 17:36
  */
 @Data
 public class Page<T> implements Serializable {
 
-    //当前页数
+    //当前页数,从第一页开始
     private Integer pageNumber;
 
     //每页显示条数
@@ -46,6 +46,13 @@ public class Page<T> implements Serializable {
      */
     private String sortMethod;
 
+    //由于数据库是从第0条开始的
+    /**
+     * 获取index
+     * 因为MySql的Index是从0开始的检索条数,
+     * 因此需要对前端传进来的当前页数(pageNumber)转换成Index
+     * @return
+     */
     public Integer getIndex(){
         return (pageNumber - 1) * pageSize;
     }

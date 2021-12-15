@@ -60,11 +60,11 @@
                update_time
         FROM sys_role
         WHERE deleted = 0
-        <if test="params.roleName ! = null and param.roleName != ''">
+        <if test="params.roleName != null and params.roleName != ''">
             and role_name = #{params.roleName}
         </if>
-        order by role_sort
-        limit #{pageNumber},#{pageSize}
+        ORDER BY role_sort ASC
+        LIMIT #{index},#{pageSize}
     </select>
 
 <!--    查询总条数-->
@@ -73,7 +73,7 @@
         FROM
         sys_role
         WHERE deleted = 0
-        <if test="params.roleName ! = null and param.roleName != ''">
+        <if test="params.roleName != null and params.roleName != ''">
             AND role_name = #{params.roleName}
         </if>
     </select>

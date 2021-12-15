@@ -56,8 +56,8 @@ public class SysRoleController {
      * @return
      */
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
-    public Result<SysRoleVo> get(@PathVariable Long id) {  //@PathVariable为路径变量,接收请求站位符的值
-        SysRoleVo sysRole = sysRoleService.get(id);
+    public Result<SysRole> get(@PathVariable Long id) {  //@PathVariable为路径变量,接收请求站位符的值
+        SysRole sysRole = sysRoleService.get(id);
         return new Result<>(sysRole);
     }
 

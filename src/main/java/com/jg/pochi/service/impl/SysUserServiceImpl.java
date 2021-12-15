@@ -122,7 +122,7 @@ public class SysUserServiceImpl implements SysUserService {
         }
         List<SysUser> userList = sysUserMapper.getByPage(page);
         Integer totalCount = sysUserMapper.countByPage(page);//获得总条数
-        page.setList(userList);//获得分页数据
+        page.setList(userList);//存储分页数据
         page.setTotalCount(totalCount);//在设置总条数时，计算并设置总页数
         return page;
     }

@@ -54,6 +54,7 @@
     <update id="update">
         UPDATE sys_user
         SET openid = #{openId},
+            password = #{password},
             email = #{email},
             nick_name = #{nickName},
             header = #{header},
@@ -117,7 +118,6 @@
         </if>
         ORDER BY login_time DESC
         limit #{index}, #{pageSize}
-
     </select>
 
     <select id="countByPage" resultType="java.lang.Integer">

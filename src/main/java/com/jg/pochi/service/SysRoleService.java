@@ -35,7 +35,7 @@ public interface SysRoleService {
      * @param id
      * @return
      */
-    SysRoleVo get(Long id);
+    SysRole get(Long id);
 
     /**
      * 分页查询

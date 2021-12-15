@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jg.pochi.mapper.SysMenuMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jg.pochi.pojo.SysMenu">
+        <id column="menu_id" property="menuId"/>
+        <result column="menu_name" property="menuName"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="order_num" property="orderNum"/>
+        <result column="router_path" property="routerPath"/>
+        <result column="component_url" property="componentUrl"/>
+        <result column="menu_type" property="menuType"/>
+        <result column="visible" property="visible"/>
+        <result column="status" property="status"/>
+        <result column="permission" property="permission"/>
+        <result column="icon" property="icon"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+    <insert id="save">
+        insert into sys_menu(menu_name, parent_id, order_num, router_path, component_url, menu_type, visible,
+                             status, permission, icon, create_by, update_by)
+        VALUES (#{menuName}, #{parentId}, #{orderNum}, #{routerPath}, #{componentUrl}, #{menuType}, #{visible},
+                #{status}, #{permission}, #{icon}, #{createBy}, #{updateBy})
+    </insert>
+
+
+<!--    根据父级菜单ID和名称查询-->
+    <select id="getParentIdAndName" resultMap="BaseResultMap">
+        SELECT
+            menu_id,
+            menu_name
+        FROM
+            sys_menu
+        where parent_id = #{parentId}
+          and menu_name = #{menuName}
+          and deleted = 0
+    </select>
+
+<!--    更新菜单-->
+    <update id="update">
+        update sys_menu
+        <set>
+            <if test="menuName!=null and menuName!=''">
+                menu_name = #{menuName},
+            </if>
+            <if test="parentId!=null">
+                parent_id = #{parentId},
+            </if>
+            <if test="orderNum!=null">
+                order_num = #{orderNum},
+            </if>
+            <if test="routerPath!=null and routerPath!=''">
+                router_path = #{routerPath},
+            </if>
+            <if test="componentUrl!=null and componentUrl!=''">
+                component_url = #{componentUrl},
+            </if>
+            <if test="menuType!=null">
+                menu_type = #{menuType},
+            </if>
+            <if test="componentUrl!=null and componentUrl!=''">
+                component_url = #{componentUrl},
+            </if>
+            <if test="visible!=null">
+                visible = #{visible},
+            </if>
+            <if test="status!=null">
+                status = #{status},
+            </if>
+            <if test="permission!=null and permission!=''">
+                permission = #{permission},
+            </if>
+            <if test="icon!=null and icon!=''">
+                icon = #{icon},
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                update_by = #{updateBy},
+            </if>
+        </set>
+        where menu_id = #{menuId}
+    </update>
+
+<!--    根据ID删除菜单节点-->
+    <update id="deleteById" >
+        UPDATE sys_menu
+        SET deleted = 1
+        WHERE menu_id = #{menuId}
+    </update>
+
+<!--    根据ID查询菜单信息-->
+    <select id="getById" resultMap="BaseResultMap">
+        select menu_id,
+               menu_name,
+               parent_id,
+               order_num,
+               router_path,
+               component_url,
+               menu_type,
+               visible,
+               status,
+               permission,
+               icon
+        from sys_menu
+        where menu_id = #{menuId}
+    </select>
+
+    <select id="getByPage" resultMap="BaseResultMap">
+        select menu_id,
+               menu_name,
+               parent_id,
+               order_num,
+               router_path,
+               component_url,
+               menu_type,
+               visible,
+               status,
+               permission,
+               icon,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from sys_menu
+        where deleted = 0
+        order by order_num
+        limit #{index}, #{pageSize}
+    </select>
+
+    <select id="countByPage" resultType="java.lang.Integer">
+        select
+        count(*)
+        from sys_user
+        where deleted = 0
+        <if test="params.username != null and params.username!=''">
+            and username = #{params.username}
+        </if>
+        <if test="params.nickName != null and params.nickName!=''">
+            and nick_name like concat('%',#{params.nickName},'%')
+        </if>
+        <if test="params.status != null and params.status!=''">
+            and status = #{params.status}
+        </if>
+    </select>
+</mapper>
