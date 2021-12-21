@@ -145,4 +145,25 @@
             and status = #{params.status}
         </if>
     </select>
+
+    <select id="getAll" resultMap="BaseResultMap">
+        select menu_id,
+               menu_name,
+               parent_id,
+               order_num,
+               router_path,
+               component_url,
+               menu_type,
+               visible,
+               status,
+               permission,
+               icon,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from sys_menu
+        where deleted = 0
+        order by order_num
+    </select>
 </mapper>

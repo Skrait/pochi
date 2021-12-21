@@ -7,12 +7,17 @@ import com.jg.pochi.exception.PochiException;
 import com.jg.pochi.mapper.SysMenuMapper;
 import com.jg.pochi.pojo.SysMenu;
 import com.jg.pochi.pojo.SysUser;
+import com.jg.pochi.pojo.vo.SysMenuVo;
 import com.jg.pochi.service.SysMenuService;
 import com.jg.pochi.utils.ShiroUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Author Peekaboo
@@ -105,4 +110,62 @@ public class SysMenuServiceImpl implements SysMenuService {
         return page;
     }
 
+    /**
+     * 查询树形节点
+     * @return
+     */
+    @Override
+    public List<SysMenuVo> getTreeList() {
+        // 查询出所有的菜单
+        List<SysMenu> menuList = sysMenuMapper.getAll();
+        // 过滤出所有顶级菜单
+        return menuList.stream()
+                // 只要父级菜单是0的就是顶级菜单
+                .filter(e -> e.getParentId().equals(CoreConstant.DEFAULT_PARENT_ID))
+                // 将顶级菜单转换成我们的视图类
+                .map(e -> {
+                    SysMenuVo sysMenuVo = new SysMenuVo();
+                    BeanUtils.copyProperties(e, sysMenuVo);
+                    return sysMenuVo;
+                })
+                // 根据顶级菜单的ID，递归从剩余的列表中找子菜单
+                .map(e -> {
+                    e.setChildren(getChildren(e, menuList));
+                    // 处理完之后，判断子菜单是否为空，如果为空，给一个null
+                    if (CollectionUtils.isEmpty(e.getChildren())) {
+                        e.setChildren(null);
+                    }
+                    return e;
+                }).collect(Collectors.toList());
+    }
+
+    /**
+     * 递归构造树形菜单
+     * @param sysMenuVo 当前菜单
+     * @param menuList 原始菜单数据List<SysMenu>
+     * @return
+     */
+    private List<SysMenuVo> getChildren(SysMenuVo sysMenuVo, List<SysMenu> menuList) {
+        // 第一步，直接找到sysMenu的子菜单
+        List<SysMenuVo> childrenList = menuList.stream().filter(e -> e.getParentId() == sysMenuVo.getMenuId())
+                // 第二步，把子菜单每一项转成SysMenuVo
+                .map(e -> {
+                    SysMenuVo sysMenuVo = new SysMenuVo();
+                    BeanUtils.copyProperties(e, sysMenuVo);
+                    return sysMenuVo;
+                })
+                // 第三步，递归找到本次获取到的所有子菜单的子菜单
+                .map(e -> {
+                    e.setChildren(getChildren(e, menuList));
+                    if (CollectionUtils.isEmpty(e.getChildren())) {
+                        e.setChildren(null);
+                    }
+                    return e;
+                }).collect(Collectors.toList());
+        // 这一步过滤掉空的子节点集合
+        if(CollectionUtils.isEmpty(childrenList)){
+            return null;
+        }
+        return childrenList;
+    }
 }

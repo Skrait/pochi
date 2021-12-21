@@ -5,6 +5,9 @@ package com.jg.pochi.service;/**
 
 import com.jg.pochi.common.Page;
 import com.jg.pochi.pojo.SysMenu;
+import com.jg.pochi.pojo.vo.SysMenuVo;
+
+import java.util.List;
 
 /**
  * @Auther Song Kang
@@ -43,4 +46,10 @@ public interface SysMenuService {
      * @return
      */
     Page<SysMenu> getByPage(Page<SysMenu> page);
+
+    /**
+     * 查询树形节点
+     * @return
+     */
+    List<SysMenuVo> getTreeList();
 }

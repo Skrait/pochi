@@ -3,11 +3,13 @@ package com.jg.pochi.controller;
 import com.jg.pochi.common.Page;
 import com.jg.pochi.common.Result;
 import com.jg.pochi.pojo.SysMenu;
+import com.jg.pochi.pojo.vo.SysMenuVo;
 import com.jg.pochi.service.SysMenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Author Peekaboo
@@ -37,7 +39,7 @@ public class SysMenuController {
      * @param sysMenu
      * @return
      */
-    @RequestMapping(value = "/save",method = RequestMethod.PUT)
+    @RequestMapping(value = "/update",method = RequestMethod.PUT)
     public Result<?> update(@RequestBody SysMenu sysMenu){
         sysMenuService.update(sysMenu);
         return new Result<>("修改成功！");
@@ -75,5 +77,15 @@ public class SysMenuController {
     public Result<Page<SysMenu>> getByPage(@RequestBody Page<SysMenu> page) {
         page = sysMenuService.getByPage(page);
         return new Result<>(page);
+    }
+
+    /**
+     * 查询树形节点
+     * @return
+     */
+    @RequestMapping(value = "/getTreeList", method = RequestMethod.GET)
+    public Result<List<SysMenuVo>> getTreeList() {
+        List<SysMenuVo> list = sysMenuService.getTreeList();
+        return new Result<>(list);
     }
 }

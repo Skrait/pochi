@@ -4,10 +4,8 @@ import com.jg.pochi.common.Page;
 import com.jg.pochi.mapper.SysRoleMapper;
 import com.jg.pochi.pojo.SysRole;
 import com.jg.pochi.pojo.SysUser;
-import com.jg.pochi.pojo.vo.SysRoleVo;
 import com.jg.pochi.service.SysRoleService;
 import com.jg.pochi.utils.ShiroUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

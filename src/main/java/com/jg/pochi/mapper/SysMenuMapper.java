@@ -5,6 +5,7 @@ package com.jg.pochi.mapper;/**
 
 import com.jg.pochi.common.Page;
 import com.jg.pochi.pojo.SysMenu;
+import com.jg.pochi.pojo.vo.SysMenuVo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -60,4 +61,10 @@ public interface SysMenuMapper {
      * @return
      */
     Integer countByPage(Page<SysMenu> page);
+
+    /**
+     * 查询所有菜单信息
+     * @return
+     */
+    List<SysMenu> getAll();
 }
