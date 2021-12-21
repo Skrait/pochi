@@ -150,9 +150,9 @@ public class SysMenuServiceImpl implements SysMenuService {
         List<SysMenuVo> childrenList = menuList.stream().filter(e -> e.getParentId() == sysMenuVo.getMenuId())
                 // 第二步，把子菜单每一项转成SysMenuVo
                 .map(e -> {
-                    SysMenuVo sysMenuVo = new SysMenuVo();
-                    BeanUtils.copyProperties(e, sysMenuVo);
-                    return sysMenuVo;
+                    SysMenuVo sysMenuVoNew = new SysMenuVo();
+                    BeanUtils.copyProperties(e, sysMenuVoNew);
+                    return sysMenuVoNew;
                 })
                 // 第三步，递归找到本次获取到的所有子菜单的子菜单
                 .map(e -> {
