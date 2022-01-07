@@ -2,6 +2,7 @@ package com.jg.pochi.mapper;
 
 import com.jg.pochi.common.Page;
 import com.jg.pochi.pojo.SysRole;
+import com.jg.pochi.pojo.vo.SysRoleVo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

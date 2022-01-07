@@ -1,8 +1,10 @@
 package com.jg.pochi.controller;
 
+import com.jg.pochi.aop.LogAnnotation;
 import com.jg.pochi.common.Page;
 import com.jg.pochi.common.Result;
 import com.jg.pochi.pojo.SysRole;
+import com.jg.pochi.pojo.vo.SysRoleVo;
 import com.jg.pochi.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +23,14 @@ public class SysRoleController {
     @Resource
     private SysRoleService sysRoleService;
 
+    /**
+     * 添加
+     * @param sysRoleVo
+     * @return
+     */
     @RequestMapping(value="save",method = RequestMethod.POST)
-    public Result<?> save(@RequestBody SysRole sysRole){
-        sysRoleService.save(sysRole);
+    public Result<?> save(@RequestBody SysRoleVo sysRolevo){
+        sysRoleService.save(sysRolevo);
         return new Result<>("添加成功");
     }
 
@@ -33,7 +40,7 @@ public class SysRoleController {
      * @return
      */
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public Result<?> update(@RequestBody SysRole sysRole) {
+    public Result<?> update(@RequestBody SysRoleVo sysRole) {
         sysRoleService.update(sysRole);
         return new Result<>("修改成功");
     }
@@ -55,8 +62,8 @@ public class SysRoleController {
      * @return
      */
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
-    public Result<SysRole> get(@PathVariable Long id) {  //@PathVariable为路径变量,接收请求站位符的值
-        SysRole sysRole = sysRoleService.get(id);
+    public Result<SysRoleVo> get(@PathVariable Long id) {  //@PathVariable为路径变量,接收请求站位符的值
+        SysRoleVo sysRole = sysRoleService.get(id);
         return new Result<>(sysRole);
     }
 
@@ -65,6 +72,8 @@ public class SysRoleController {
      * @param page
      * @return
      */
+    //加上次注解 代表对此接口记录日志,这里我们用AOP实现
+    @LogAnnotation(module="文章",operation="获取文章列表")
     @RequestMapping(value = "/getByPage", method = RequestMethod.POST)
     public Result<Page<SysRole>> getByPage(@RequestBody Page<SysRole> page) {
         page = sysRoleService.getByPage(page);

@@ -1,5 +1,6 @@
 package com.jg.pochi.controller;
 
+import com.jg.pochi.aop.LogAnnotation;
 import com.jg.pochi.common.Page;
 import com.jg.pochi.common.Result;
 import com.jg.pochi.enums.ResultEnums;
@@ -98,6 +99,8 @@ public class SysUserController {
      * @param page
      * @return
      */
+    //加上次注解 代表对此接口记录日志,这里我们用AOP实现
+    @LogAnnotation(module="文章",operation="获取文章列表")
     @RequestMapping(value = "/getByPage", method = RequestMethod.POST)
     public Result<Page<SysUser>> getByPage(@RequestBody Page<SysUser> page) {
         page = sysUserService.getByPage(page);

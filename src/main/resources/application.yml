@@ -5,9 +5,9 @@ spring:
         enabled: true
   datasource:
     druid:
-      url: jdbc:mysql://116.62.5.248:3306/pochi?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8
+      url: jdbc:mysql://127.0.0.1:3306/pochilocal?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8
       username: root
-      password: yangdeshi
+      password: 122112
       driver-class-name: com.mysql.cj.jdbc.Driver
       initialSize: 5
       minIdle: 5

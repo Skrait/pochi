@@ -7,6 +7,10 @@
         <result column="menuId" property="menuId"/>
         <result column="roleId" property="roleId"/>
     </resultMap>
+    <delete id="deleteRoleById">
+        DELETE FROM sys_role_menu
+        WHERE role_id = #{roleId}
+    </delete>
 
 
 </mapper>

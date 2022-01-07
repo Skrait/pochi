@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -118,25 +119,27 @@ public class SysMenuServiceImpl implements SysMenuService {
     public List<SysMenuVo> getTreeList() {
         // 查询出所有的菜单
         List<SysMenu> menuList = sysMenuMapper.getAll();
+
         // 过滤出所有顶级菜单
-        return menuList.stream()
+        return menuList.stream().filter(e->e.getParentId().equals(CoreConstant.DEFAULT_PARENT_ID))
                 // 只要父级菜单是0的就是顶级菜单
-                .filter(e -> e.getParentId().equals(CoreConstant.DEFAULT_PARENT_ID))
-                // 将顶级菜单转换成我们的视图类
-                .map(e -> {
-                    SysMenuVo sysMenuVo = new SysMenuVo();
-                    BeanUtils.copyProperties(e, sysMenuVo);
-                    return sysMenuVo;
-                })
-                // 根据顶级菜单的ID，递归从剩余的列表中找子菜单
-                .map(e -> {
-                    e.setChildren(getChildren(e, menuList));
-                    // 处理完之后，判断子菜单是否为空，如果为空，给一个null
-                    if (CollectionUtils.isEmpty(e.getChildren())) {
-                        e.setChildren(null);
-                    }
-                    return e;
-                }).collect(Collectors.toList());
+        .map(e->{
+            // 将顶级菜单转换成我们的视图类
+            SysMenuVo sysMenuVo = new SysMenuVo();
+            BeanUtils.copyProperties(e,sysMenuVo);
+            return sysMenuVo;
+        })
+        .map(e->{
+            // 根据顶级菜单的ID，递归从剩余的列表中找子菜单
+           e.setChildren(getChildren(e,menuList));
+           //如果发现子节点为空，则设为null
+           if (CollectionUtils.isEmpty(e.getChildren())){
+               e.setChildren(null);
+           }
+            return e;
+        })
+
+        .collect(Collectors.toList());
     }
 
     /**
