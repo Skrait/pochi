@@ -171,4 +171,14 @@ public class SysMenuServiceImpl implements SysMenuService {
         }
         return childrenList;
     }
+
+    /**
+     * 根据角色查询菜单，其中不包括父级菜单
+     */
+    @Override
+    public List<Long> getRoleSelectMenu(Long roleId) {
+        List<SysMenu> menuList = sysMenuMapper.getRoleSelectMenu(roleId);
+        List<Long> collect = menuList.stream().map(SysMenu::getMenuId).collect(Collectors.toList());
+        return collect;
+    }
 }

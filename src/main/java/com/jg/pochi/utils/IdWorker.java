@@ -96,7 +96,6 @@ public final class IdWorker {
     }
     /**
      * 获取下一个ID
-     *
      * @return id
      */
     public synchronized long nextId() {

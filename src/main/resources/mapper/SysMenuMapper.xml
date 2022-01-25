@@ -166,4 +166,19 @@
         where deleted = 0
         order by order_num
     </select>
+<!--根据角色ID查询被选中的菜单ID，不包括-->
+    <select id="getRoleSelectMenu" resultMap="BaseResultMap">
+        select m.menu_id, m.menu_name, m.parent_id
+        from sys_menu as m
+                 left join sys_role_menu srm on m.menu_id = srm.menu_id
+        where m.deleted = 0
+          and srm.role_id = #{roleId}
+          and m.menu_id not in (
+            select tm.parent_id
+            from sys_menu tm
+                     inner join sys_role_menu s on tm.menu_id = s.menu_id
+                and s.role_id = #{roleId}
+            where tm.deleted = 0
+        )
+    </select>
 </mapper>

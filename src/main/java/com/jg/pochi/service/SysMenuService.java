@@ -52,4 +52,10 @@ public interface SysMenuService {
      * @return
      */
     List<SysMenuVo> getTreeList();
+
+    /**
+     * 根据角色ID查询被选中的菜单ID集合
+     * 这里不查询父级菜单
+     */
+    List<Long> getRoleSelectMenu(Long roleId);
 }

@@ -35,24 +35,22 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void save(SysRoleVo sysRole) {
-        //设置角色的创建人和修改人为用户名
-        //先从shiro获取登录用户
+        // 设置创建人和修改人为用户名
         SysUser loginUser = ShiroUtils.getLoginUser();
         String username = loginUser.getUsername();
-        //创建Sysrole对象
+        // 创建SysRole对象
         SysRole role = new SysRole();
-        //拷贝属性
-        BeanUtils.copyProperties(sysRole,role);
+        // 拷贝属性
+        BeanUtils.copyProperties(sysRole, role);
         role.setCreateBy(username);
         role.setUpdateBy(username);
         sysRoleMapper.save(role);
-        //下面开始添加角色权限数据
+        // 下面开始添加角色权限数据
         saveRoleMenu(sysRole, role);
-
     }
 
     /**
-     * 修改角色
+     * 修改角色，其中添加权限可能是不做的,但删除是一定要走的。
      * @param sysRole
      */
     @Override
@@ -63,22 +61,28 @@ public class SysRoleServiceImpl implements SysRoleService {
         String username = loginUser.getUsername();
         SysRole role = new SysRole();
         BeanUtils.copyProperties(sysRole,role);
-
+        //拷贝属性
+        role.setUpdateBy(username);
+        sysRoleMapper.update(role);
         //不管添没添加，即是否点击权限选项,先走一遍删除权限
-        sysRoleMenuMapper.deleteRoleById(role.getRoleId());
-
+        //根据RoleId删除角色权限表
+        try {
+            sysRoleMenuMapper.deleteByRoleId(role.getRoleId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //下面开始添加角色权限数据
         saveRoleMenu(sysRole, role);
 
     }
 
     /**
-     * 保存角色数据
+     * 单独 —— 保存角色数据
      * @param sysRole
      * @param role
      */
     private void saveRoleMenu(SysRoleVo sysRole, SysRole role) {
-        if (CollectionUtils.isEmpty(sysRole.getAuthIds())){
+        if (!CollectionUtils.isEmpty(sysRole.getAuthIds())){
             //根据当前角色拥有的菜单ID集合构造List<sysRoleMenu>
             List<SysRoleMenu> roleMenuList = sysRole.getAuthIds().stream().map(id -> {
                 SysRoleMenu sysRoleMenu = new SysRoleMenu();
@@ -114,9 +118,8 @@ public class SysRoleServiceImpl implements SysRoleService {
         List<SysRoleMenu> roleMenuList = sysRoleMenuMapper.getByRoleId(id);
         //如果角色ID不为空，则取出菜单ID集合
         if (!CollectionUtils.isEmpty(roleMenuList)){
-            //取出权限ID
-            List<Long> authIds = roleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
-            //roleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList())
+            //取出权限ID(菜单id)
+            List<Long> authIds = roleMenuList.stream().map(item->item.getMenuId()).collect(Collectors.toList());
         vo.setAuthIds(authIds);
         }
         return vo;

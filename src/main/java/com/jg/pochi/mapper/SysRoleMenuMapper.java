@@ -22,10 +22,10 @@ public interface SysRoleMenuMapper {
     void saveBatch(List<SysRoleMenu> roleMenuList);
 
 
-    void deleteRoleById(Long roleId);
+    void deleteByRoleId(Long roleId);
 
     /**
-     * 根据角色ID查询
+     * 根据角色ID查询角色菜单信息
      * @param id
      * @return
      */

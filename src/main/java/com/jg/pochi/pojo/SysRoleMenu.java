@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 角色和菜单关联表实体类
+ * 角色和菜单关联表
  * Author Peekaboo
  * Date 2021/12/26 22:26
  */

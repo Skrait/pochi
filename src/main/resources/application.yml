@@ -1,3 +1,4 @@
+
 spring:
   mvc:
     hiddenmethod:
@@ -22,11 +23,12 @@ spring:
       max-file-size: 50MB
       max-request-size: 100MB
   redis:
-    host: 116.62.5.248
+    host: 127.0.0.1
     port: 6379
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
   type-aliases-package: com.jg.pochi
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
+server:
+  port: 6060

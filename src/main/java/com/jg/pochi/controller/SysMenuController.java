@@ -91,4 +91,16 @@ public class SysMenuController {
         List<SysMenuVo> list = sysMenuService.getTreeList();
         return new Result<>(list);
     }
+
+    /**
+     * 根据角色ID查询被选中的菜单ID集合
+     * 这里不查询父级菜单
+     * @param roleId
+     * @return
+     */
+    @GetMapping("/getRoleSelectMenu/{roleId}")
+    public Result<List<Long>> getRoleSelectMenu(@PathVariable Long roleId){
+        List<Long> roleSelectMenu = sysMenuService.getRoleSelectMenu(roleId);
+        return new Result<>(roleSelectMenu);
+    }
 }
