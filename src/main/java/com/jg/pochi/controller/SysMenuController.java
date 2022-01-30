@@ -4,6 +4,7 @@ import com.jg.pochi.aop.LogAnnotation;
 import com.jg.pochi.common.Page;
 import com.jg.pochi.common.Result;
 import com.jg.pochi.pojo.SysMenu;
+import com.jg.pochi.pojo.vo.RouterVo;
 import com.jg.pochi.pojo.vo.SysMenuVo;
 import com.jg.pochi.service.SysMenuService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,22 +27,24 @@ public class SysMenuController {
 
     /**
      * 添加菜单
+     *
      * @param sysMenu
      * @return
      */
-    @RequestMapping(value = "/save",method = RequestMethod.POST)
-    public Result<?> save(@RequestBody SysMenu sysMenu){
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public Result<?> save(@RequestBody SysMenu sysMenu) {
         sysMenuService.save(sysMenu);
         return new Result<>("添加成功！");
     }
 
     /**
      * 修改菜单
+     *
      * @param sysMenu
      * @return
      */
-    @RequestMapping(value = "/update",method = RequestMethod.PUT)
-    public Result<?> update(@RequestBody SysMenu sysMenu){
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    public Result<?> update(@RequestBody SysMenu sysMenu) {
         sysMenuService.update(sysMenu);
         return new Result<>("修改成功！");
     }
@@ -60,6 +63,7 @@ public class SysMenuController {
 
     /**
      * 根据id查询
+     *
      * @param id
      * @return
      */
@@ -71,11 +75,12 @@ public class SysMenuController {
 
     /**
      * 分页查询
+     *
      * @param page
      * @return
      */
     //加上次注解 代表对此接口记录日志,这里我们用AOP实现
-    @LogAnnotation(module="文章",operation="获取文章列表")
+    @LogAnnotation(module = "文章", operation = "获取文章列表")
     @RequestMapping(value = "/getByPage", method = RequestMethod.POST)
     public Result<Page<SysMenu>> getByPage(@RequestBody Page<SysMenu> page) {
         page = sysMenuService.getByPage(page);
@@ -84,6 +89,7 @@ public class SysMenuController {
 
     /**
      * 查询树形节点
+     *
      * @return
      */
     @RequestMapping(value = "/getTreeList", method = RequestMethod.GET)
@@ -95,12 +101,24 @@ public class SysMenuController {
     /**
      * 根据角色ID查询被选中的菜单ID集合
      * 这里不查询父级菜单
+     *
      * @param roleId
      * @return
      */
     @GetMapping("/getRoleSelectMenu/{roleId}")
-    public Result<List<Long>> getRoleSelectMenu(@PathVariable Long roleId){
+    public Result<List<Long>> getRoleSelectMenu(@PathVariable Long roleId) {
         List<Long> roleSelectMenu = sysMenuService.getRoleSelectMenu(roleId);
         return new Result<>(roleSelectMenu);
+    }
+
+    /**
+     * 获取动态路由
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getRouters", method = RequestMethod.GET)
+    public Result<List<RouterVo>> getRouters() {
+        List<RouterVo> list = sysMenuService.getRouters();
+        return new Result<>(list);
     }
 }

@@ -73,4 +73,11 @@ public interface SysMenuMapper {
      * @param roleId
      */
     List<SysMenu> getRoleSelectMenu(Long roleId);
+
+    /**
+     * 根据用户ID查询启用中的菜单(权限不查)
+     * @param id
+     * @return
+     */
+    List<SysMenu> getEnableMenuByUserId(Long id);
 }

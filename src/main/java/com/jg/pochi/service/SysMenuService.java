@@ -5,6 +5,7 @@ package com.jg.pochi.service;/**
 
 import com.jg.pochi.common.Page;
 import com.jg.pochi.pojo.SysMenu;
+import com.jg.pochi.pojo.vo.RouterVo;
 import com.jg.pochi.pojo.vo.SysMenuVo;
 
 import java.util.List;
@@ -58,4 +59,10 @@ public interface SysMenuService {
      * 这里不查询父级菜单
      */
     List<Long> getRoleSelectMenu(Long roleId);
+
+    /**
+     * 获取动态路由
+     * @return
+     */
+    List<RouterVo> getRouters();
 }
